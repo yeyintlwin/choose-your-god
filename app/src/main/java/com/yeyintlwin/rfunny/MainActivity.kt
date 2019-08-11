@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         tempAnswer = ArrayList()
 
         loadAssets(fuckPath)
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -61,17 +60,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     ".fa" -> {
                         fuckLayout.visibility = View.GONE
                         finalAnswer.visibility = View.VISIBLE
-                        finalAnswerText.text = "သင်က\n" + removeFormat(name)
+                        finalAnswerText.text = "သင်က\n${removeFormat(name)}"
                         finalAnswerText.text = Rabbit.uni2zg(finalAnswerText.text.toString())
                         return
                     }
                     ".q" -> questionText.text = removeFormat(name)
 
                     ".a" -> tempAnswer.add(removeFormat(name))
-
                 }
-
-
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -88,7 +84,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         answer_0.text = Rabbit.uni2zg(answer_0.text.toString())
         answer_1.text = Rabbit.uni2zg(answer_1.text.toString())
         answer_2.text = Rabbit.uni2zg(answer_2.text.toString())
-
     }
 
     private fun removeFormat(fileName: String): String {
@@ -107,7 +102,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(Intent(this, AboutsActivity::class.java))
             return true
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -118,7 +112,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         Toast.makeText(this, "Press back bottom again to exist!", Toast.LENGTH_SHORT).show()
         backPress = System.currentTimeMillis()
-
-
     }
 }
