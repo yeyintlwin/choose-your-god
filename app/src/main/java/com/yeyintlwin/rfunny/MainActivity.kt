@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var fuckPath = "data"
     private var tempAnswer = mutableListOf<String>()
 
-    private var back_press: Long = 0
+    private var backPress: Long = 0
 
     override fun onClick(v: View) {
         answer_2.visibility = View.GONE
@@ -119,12 +119,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        if (back_press + 2000 > System.currentTimeMillis()) {
+        if (backPress + 2000 > System.currentTimeMillis()) {
             super.onBackPressed()
             return
         }
         Toast.makeText(this, "Press back bottom again to exist!", Toast.LENGTH_SHORT).show()
-        back_press = System.currentTimeMillis()
+        backPress = System.currentTimeMillis()
 
 
     }
