@@ -17,8 +17,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val assetPath = "file:///android_asset/"
-    private var fuckPath = "data"
+    private var fuckPath: String = ""
     private var tempAnswer = mutableListOf<String>()
 
     private var backPress: Long = 0
@@ -26,9 +25,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         answer_2.visibility = View.GONE
         when (v) {
-            answer_0 -> fuckPath += "/" + tempAnswer[0] + ".a"
-            answer_1 -> fuckPath += "/" + tempAnswer[1] + ".a"
-            answer_2 -> fuckPath += "/" + tempAnswer[2] + ".a"
+            answer_0 -> fuckPath += "/${tempAnswer[0]}.a"
+            answer_1 -> fuckPath += "/${tempAnswer[1]}.a"
+            answer_2 -> fuckPath += "/${tempAnswer[2]}.a"
         }
         loadAssets(fuckPath)
     }
@@ -51,31 +50,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun loadAssets(path: String) {
         tempAnswer.clear()
         try {
-            val fileNames = assets.list(path)
+            val fileNames = assets.list("data$path")
             for (fileName in fileNames!!) {
 
-                val file = File(assetPath + fileName)
+                val file = File("file:///android_asset/data/$fileName")
 
-                println(file.absolutePath)
                 val name = file.name
 
-                val format = name.substring(name.lastIndexOf('.'))
+                when (name.substring(name.lastIndexOf('.'))) {
+                    ".fa" -> {
+                        fuckLayout.visibility = View.GONE
+                        finalAnswer.visibility = View.VISIBLE
+                        finalAnswerText.text = "သင်က\n" + removeFormat(name)
+                        finalAnswerText.text = Rabbit.uni2zg(finalAnswerText.text.toString())
+                        return
+                    }
+                    ".q" -> questionText.text = removeFormat(name)
 
-                if (format == ".fa") {
-                    println("target: " + removeFormat(name))
-                    fuckLayout.visibility = View.GONE
-                    finalAnswer.visibility = View.VISIBLE
-                    finalAnswerText.text = "သင်က\n" + removeFormat(name)
-                    finalAnswerText.text = Rabbit.uni2zg(finalAnswerText.text.toString())
-                    return
-                }
+                    ".a" -> tempAnswer.add(removeFormat(name))
 
-                if (format == ".q") {
-                    questionText.text = removeFormat(name)
-                }
-
-                if (format == ".a") {
-                    tempAnswer.add(removeFormat(name))
                 }
 
 
